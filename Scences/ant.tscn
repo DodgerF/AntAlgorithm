@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dab84puwng35e"]
+
+[ext_resource type="Script" path="res://Scripts/Ant.cs" id="1_4p4rp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bsgog"]
+
+[node name="Ant" type="Node2D"]
+script = ExtResource("1_4p4rp")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CapsuleShape2D_bsgog")
