@@ -1,11 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dab84puwng35e"]
+[gd_scene load_steps=4 format=3 uid="uid://dab84puwng35e"]
 
-[ext_resource type="Script" path="res://Scripts/Ant.cs" id="1_4p4rp"]
+[ext_resource type="Script" path="res://Scripts/Ant.cs" id="1_cj4yt"]
+[ext_resource type="Texture2D" uid="uid://c7sreyrfkbxaf" path="res://Sprites/Блоха.png" id="2_4m0t6"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bsgog"]
+radius = 11.0
 
 [node name="Ant" type="Node2D"]
-script = ExtResource("1_4p4rp")
+script = ExtResource("1_cj4yt")
+
+[node name="View" type="Sprite2D" parent="."]
+position = Vector2(-3.46666e-07, 0.5)
+scale = Vector2(0.252874, 0.209459)
+texture = ExtResource("2_4m0t6")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 

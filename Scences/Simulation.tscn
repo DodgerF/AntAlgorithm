@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://i12falt35fhy"]
+
+[ext_resource type="PackedScene" uid="uid://dab84puwng35e" path="res://Scences/ant.tscn" id="1_87j2p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_crfxy"]
+size = Vector2(1154, 645)
+
+[node name="Simulation" type="Node2D"]
+
+[node name="Plane" type="RigidBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plane"]
+position = Vector2(1, -1.5)
+shape = SubResource("RectangleShape2D_crfxy")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Ant" parent="." instance=ExtResource("1_87j2p")]
