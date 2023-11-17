@@ -1,12 +1,17 @@
+using AntAlgorithm;
 using Godot;
 using System;
+using System.Drawing;
 
 
 public partial class Plane : Area2D
 {
 	// Called when the node enters the scene tree for the first time.
+	private Vector2 _planeSize;
+
 	public override void _Ready()
 	{
+		_planeSize = this.GetViewportRect().Size;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,15 +21,23 @@ public partial class Plane : Area2D
 	}
 
 	public void OnAreaExit(Area2D area) {
-		GD.Print("Exited: " + area);
+		if (area.GetType() == typeof(Ant)) {
+			Ant ant = (Ant)area;
 
-		// if (RotationDegrees < 90 && RotationDegrees > 0 ) {
-		// 	Rotation = (float)Math.PI * RotationDegrees;
-		// }
+			ant.Rotation = DegToRad(360f) - ant.Rotation;
+			if (Math.Abs(ant.Position.X * 2) > _planeSize.X) {
+				ant.Rotate((float)Math.PI);
+			}
+		}
+
+	}
+
+	public float DegToRad(float angle) {
+		return ((float)Math.PI / 180) * angle;
 	}
 
 	public void OnAreaEntered(Area2D area) {
-		GD.Print("Entered: " + area.GetType());
+		
 	}
 	
 
