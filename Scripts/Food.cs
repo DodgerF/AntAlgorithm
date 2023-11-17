@@ -1,9 +1,8 @@
 using Godot;
 using System;
 
-public abstract partial class Target : Area2D
+public partial class Food : Area2D
 {
-	//
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{

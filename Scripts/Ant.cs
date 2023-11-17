@@ -4,20 +4,24 @@ using Godot;
 // Ant
 namespace AntAlgorithm 
 {
+    public enum TargetType 
+    {
+        Queen,
+        Food
+    }
+
     public partial class Ant : Area2D
     {
         // Fields
 
-        //TODO: цель хождения
         private int _distQueen; 
-        private int _distEat;
-        private float _velocity = 1f;
+        private int _distFood;
+        [Export] private float _velocity;
         public float Velocity { get { return _velocity; } private set { _velocity = value; } }
 
-        private float _changeDirVelocity = 0.01f;
-        public float ChangeDirVelocity { get { return _changeDirVelocity; } private set { _changeDirVelocity = value; } }
+        [Export] private float _radius;
 
-        private Vector3 _dir;
+        private TargetType _target;
 
         private AntMover _mover;
         private VoiceArea _voiceArea;
@@ -29,14 +33,17 @@ namespace AntAlgorithm
             _voiceArea = (VoiceArea)FindInChildren(typeof(VoiceArea));
 
             // TODO: Переделать в будущем
-            _distEat = 0;
+            _distFood = 0;
             _distQueen = 0;
+
+            _target = TargetType.Queen;
         }
         
 
         public override void _PhysicsProcess(double delta)
         {
             Move();
+            Shout();
         }
 
         // Public methods
@@ -44,20 +51,54 @@ namespace AntAlgorithm
         /// Сравниваем полученные данные и при необходимости перезаписываем свои.
         /// </summary>
         /// <param name="distQueen"></param>
-        /// <param name="distEat"></param>
-        public void HearDistances(Vector2 dir, int distQueen, int distEat)
+        /// <param name="distFood"></param>
+        public void HearDistances(Vector2 dir, int distQueen, int distFood)
         {  
-            //TODO: добавить LookAt и вынести этот самый лукзюк
-            if (distEat < _distEat)
+            if (distFood < _distFood)
             {
-                _distEat = distEat;
+                _distFood = distFood;
+                if (_target == TargetType.Food)
+                {
+                    LookAt(dir);
+                }
             }
 
             if (distQueen < _distQueen)
             {
                 _distQueen = distQueen;
+                if (_target == TargetType.Queen)
+                {
+                    LookAt(dir);
+                }
             }
         }
+
+        public void OnCollisionEnter(Area2D area)
+		{
+			if (area.GetType() == typeof(Queen))
+			{
+				_distQueen = 0;
+                Rotate((float)Math.PI);
+
+                if (_target == TargetType.Queen)
+                {
+                    _target = TargetType.Food;
+                    
+                }
+			}
+
+            if (area.GetType() == typeof(Food))
+			{
+				_distFood = 0;
+                Rotate((float)Math.PI);
+
+                if (_target == TargetType.Food)
+                {
+                    _target = TargetType.Queen;
+                    
+                }
+			}
+		}
 
 
         // Private methods
@@ -68,7 +109,7 @@ namespace AntAlgorithm
             {
                 if (ant == this) continue;
 
-                ant.HearDistances(Position, _distQueen, _distEat);
+                ant.HearDistances(Position, _distQueen + (int)_radius, _distFood + (int)_radius);
             }
         }
 
@@ -78,7 +119,7 @@ namespace AntAlgorithm
         private void Move()
         {
             _mover.Move(this);
-            _distEat++;
+            _distFood++;
             _distQueen++;
         }
 

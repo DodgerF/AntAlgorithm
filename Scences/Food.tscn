@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhghwaithlaca"]
+
+[ext_resource type="Texture2D" uid="uid://cqra0u4q5g836" path="res://Sprites/Food.png" id="1_c0xnu"]
+[ext_resource type="Script" path="res://Scripts/Food.cs" id="1_kumif"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_23ctu"]
+radius = 26.0
+
+[node name="Food" type="Area2D"]
+script = ExtResource("1_kumif")
+
+[node name="View" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_c0xnu")
+
+[node name="CollisionBody" type="CollisionShape2D" parent="."]
+light_mask = 8
+visibility_layer = 2
+shape = SubResource("CircleShape2D_23ctu")

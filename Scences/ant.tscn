@@ -14,6 +14,8 @@ disable_mode = 2
 collision_layer = 2
 input_pickable = false
 script = ExtResource("1_sw1d3")
+_velocity = 1.0
+_radius = 10.0
 
 [node name="View" type="Sprite2D" parent="."]
 position = Vector2(-3.46666e-07, 0.5)
@@ -23,6 +25,7 @@ texture = ExtResource("2_qiorv")
 
 [node name="CollisionBody" type="CollisionShape2D" parent="."]
 light_mask = 2
+visibility_layer = 9
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_xatja")
 
@@ -41,5 +44,6 @@ scale = Vector2(10, 10)
 shape = SubResource("CircleShape2D_b0fvi")
 debug_color = Color(0.996078, 0, 0.188235, 0.0901961)
 
+[connection signal="area_entered" from="." to="." method="OnCollisionEnter"]
 [connection signal="area_entered" from="VoiceArea" to="VoiceArea" method="OnCollisionEnter"]
 [connection signal="area_exited" from="VoiceArea" to="VoiceArea" method="OnCollisionExit"]
