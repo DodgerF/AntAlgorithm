@@ -1,14 +1,12 @@
 using Godot;
 
-public partial class AntMover : Node2D
-{
-	public override void _Ready()
+namespace AntAlgorithm
 	{
+	public partial class AntMover : Node2D
+	{
+		public void Move(Ant ant)
+		{
+			ant.Position += ant.Transform.X * ant.Velocity;
+		}
 	}
-
-	public override void _PhysicsProcess(double delta)
-    {
-		
-	    Position += Transform.Y *_velocity;
-    }
 }

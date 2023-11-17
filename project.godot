@@ -18,3 +18,9 @@ config/icon="res://icon.svg"
 [dotnet]
 
 project/assembly_name="AntAlgorithm"
+
+[layer_names]
+
+2d_render/layer_1="Plane"
+2d_render/layer_2="Ant"
+2d_render/layer_3="Voice"

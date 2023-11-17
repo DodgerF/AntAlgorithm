@@ -1,20 +1,45 @@
-[gd_scene load_steps=4 format=3 uid="uid://dab84puwng35e"]
+[gd_scene load_steps=7 format=3 uid="uid://u6vcus867yqg"]
 
-[ext_resource type="Script" path="res://Scripts/Ant.cs" id="1_cj4yt"]
-[ext_resource type="Texture2D" uid="uid://c7sreyrfkbxaf" path="res://Sprites/Блоха.png" id="2_4m0t6"]
+[ext_resource type="Script" path="res://Scripts/Ant.cs" id="1_sw1d3"]
+[ext_resource type="Texture2D" uid="uid://c7sreyrfkbxaf" path="res://Sprites/Блоха.png" id="2_qiorv"]
+[ext_resource type="Script" path="res://Scripts/AntMover.cs" id="3_5n5is"]
+[ext_resource type="Script" path="res://Scripts/VoiceArea.cs" id="4_ekx1c"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bsgog"]
-radius = 11.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xatja"]
 
-[node name="Ant" type="Node2D"]
-script = ExtResource("1_cj4yt")
+[sub_resource type="CircleShape2D" id="CircleShape2D_b0fvi"]
+
+[node name="Ant" type="Area2D"]
+disable_mode = 2
+collision_layer = 2
+input_pickable = false
+script = ExtResource("1_sw1d3")
 
 [node name="View" type="Sprite2D" parent="."]
 position = Vector2(-3.46666e-07, 0.5)
+rotation = 1.5708
 scale = Vector2(0.252874, 0.209459)
-texture = ExtResource("2_4m0t6")
+texture = ExtResource("2_qiorv")
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="CollisionBody" type="CollisionShape2D" parent="."]
+light_mask = 2
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_xatja")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-shape = SubResource("CapsuleShape2D_bsgog")
+[node name="Mover" type="Node2D" parent="."]
+script = ExtResource("3_5n5is")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="VoiceArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("4_ekx1c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VoiceArea"]
+scale = Vector2(10, 10)
+shape = SubResource("CircleShape2D_b0fvi")
+debug_color = Color(0.996078, 0, 0.188235, 0.0901961)
+
+[connection signal="area_entered" from="VoiceArea" to="VoiceArea" method="OnCollisionEnter"]
+[connection signal="area_exited" from="VoiceArea" to="VoiceArea" method="OnCollisionExit"]
