@@ -25,3 +25,7 @@ project/assembly_name="AntAlgorithm"
 2d_render/layer_2="Ant"
 2d_render/layer_3="Voice"
 2d_render/layer_4="Target"
+
+[physics]
+
+common/max_physics_steps_per_frame=1

@@ -30,11 +30,14 @@ namespace AntAlgorithm
         public override void _Ready()
         {
             _mover = (AntMover)FindInChildren(typeof(AntMover));
-            _voiceArea = (VoiceArea)FindInChildren(typeof(VoiceArea));
 
-            // TODO: Переделать в будущем
+            _voiceArea = (VoiceArea)FindInChildren(typeof(VoiceArea));
+            _voiceArea.SetRadius(_radius);
+
             _distFood = 0;
             _distQueen = 0;
+
+            _velocity += NextFloat(0f, 1f);
 
             _target = TargetType.Queen;
         }
@@ -43,7 +46,7 @@ namespace AntAlgorithm
         public override void _PhysicsProcess(double delta)
         {
             Move();
-            Shout();
+            //Shout();
         }
 
         // Public methods
@@ -72,6 +75,10 @@ namespace AntAlgorithm
                 }
             }
         }
+        public void Shout(Ant ant)
+        {
+            ant.HearDistances(Position, _distQueen + (int)_radius, _distFood + (int)_radius);
+        }
 
         public void OnCollisionEnter(Area2D area)
 		{
@@ -79,6 +86,7 @@ namespace AntAlgorithm
 			{
 				_distQueen = 0;
                 Rotate((float)Math.PI);
+                ShoutEveryoneInArea();
 
                 if (_target == TargetType.Queen)
                 {
@@ -91,6 +99,7 @@ namespace AntAlgorithm
 			{
 				_distFood = 0;
                 Rotate((float)Math.PI);
+                ShoutEveryoneInArea();
 
                 if (_target == TargetType.Food)
                 {
@@ -100,16 +109,15 @@ namespace AntAlgorithm
 			}
 		}
 
-
         // Private methods
-
-        private void Shout()
+        
+        private void ShoutEveryoneInArea()
         {
             foreach(Ant ant in _voiceArea.Ants)
             {
                 if (ant == this) continue;
 
-                ant.HearDistances(Position, _distQueen + (int)_radius, _distFood + (int)_radius);
+                Shout(ant);
             }
         }
 
@@ -121,6 +129,18 @@ namespace AntAlgorithm
             _mover.Move(this);
             _distFood++;
             _distQueen++;
+            Rotate(NextFloat(DegToRad(-5), DegToRad(5)));
+        }
+
+        public float DegToRad(float angle) {
+            return ((float)Math.PI / 180) * angle;
+        }
+
+
+        static float NextFloat(float min, float max){
+            System.Random random = new System.Random();
+            double val = (random.NextDouble() * (max - min) + min);
+            return (float)val;
         }
 
         /// <summary>

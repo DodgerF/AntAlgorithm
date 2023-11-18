@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://i12falt35fhy"]
+[gd_scene load_steps=7 format=3 uid="uid://i12falt35fhy"]
 
 [ext_resource type="PackedScene" uid="uid://u6vcus867yqg" path="res://Scences/Ant.tscn" id="1_kqm7l"]
+[ext_resource type="Script" path="res://Scripts/Simulation.cs" id="1_m2jov"]
 [ext_resource type="Script" path="res://Scripts/Plane.cs" id="2_llcu0"]
 [ext_resource type="PackedScene" uid="uid://bhghwaithlaca" path="res://Scences/Food.tscn" id="3_s5vku"]
 [ext_resource type="PackedScene" uid="uid://bf34t63kht76v" path="res://Scences/Queen.tscn" id="4_64rlw"]
@@ -9,6 +10,7 @@
 size = Vector2(20.0278, 26.129)
 
 [node name="Simulation" type="Node2D"]
+script = ExtResource("1_m2jov")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -33,7 +35,7 @@ scale = Vector2(57.52, 24.8)
 shape = SubResource("RectangleShape2D_n5fl3")
 
 [node name="Food" parent="." instance=ExtResource("3_s5vku")]
-position = Vector2(-532, -2)
+position = Vector2(-479, 260)
 
 [node name="Queen" parent="." instance=ExtResource("4_64rlw")]
 position = Vector2(363, -158)

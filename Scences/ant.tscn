@@ -15,18 +15,19 @@ collision_layer = 2
 input_pickable = false
 script = ExtResource("1_sw1d3")
 _velocity = 1.0
-_radius = 10.0
+_radius = 5.0
 
 [node name="View" type="Sprite2D" parent="."]
-position = Vector2(-3.46666e-07, 0.5)
+position = Vector2(1.7053e-13, 0)
 rotation = 1.5708
-scale = Vector2(0.252874, 0.209459)
+scale = Vector2(0.033, 0.027)
 texture = ExtResource("2_qiorv")
 
 [node name="CollisionBody" type="CollisionShape2D" parent="."]
 light_mask = 2
 visibility_layer = 9
 rotation = 1.5708
+scale = Vector2(0.13, 0.13)
 shape = SubResource("CapsuleShape2D_xatja")
 
 [node name="Mover" type="Node2D" parent="."]
@@ -37,10 +38,10 @@ script = ExtResource("3_5n5is")
 [node name="VoiceArea" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 2
+monitorable = false
 script = ExtResource("4_ekx1c")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VoiceArea"]
-scale = Vector2(10, 10)
 shape = SubResource("CircleShape2D_b0fvi")
 debug_color = Color(0.996078, 0, 0.188235, 0.0901961)
 
