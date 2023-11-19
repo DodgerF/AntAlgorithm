@@ -21,6 +21,9 @@ namespace AntAlgorithm
 
         [Export] private float _radius;
 
+        [Export] private float _distGo;
+        private Vector2 _startPos;
+
         private TargetType _target;
 
         private AntMover _mover;
@@ -40,6 +43,8 @@ namespace AntAlgorithm
             _velocity += NextFloat(0f, 1f);
 
             _target = TargetType.Queen;
+
+            _startPos = Position;
         }
         
 
@@ -130,6 +135,16 @@ namespace AntAlgorithm
             _distFood++;
             _distQueen++;
             Rotate(NextFloat(DegToRad(-5), DegToRad(5)));
+
+            if (_startPos.Y + _distGo < Math.Abs(Position.Y))
+            {
+                Rotation = DegToRad(360f) - Rotation;
+            }
+
+            if (Math.Abs(Position.X) > _startPos.Y + _distGo) 
+            {
+				    Rotate((float)Math.PI);
+			}
         }
 
         public float DegToRad(float angle) {

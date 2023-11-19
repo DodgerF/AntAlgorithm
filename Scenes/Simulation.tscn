@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://i12falt35fhy"]
+
+[ext_resource type="Script" path="res://Scripts/Simulation.cs" id="1_m2jov"]
+[ext_resource type="PackedScene" uid="uid://bhghwaithlaca" path="res://Scenes/Food.tscn" id="3_s5vku"]
+[ext_resource type="PackedScene" uid="uid://bf34t63kht76v" path="res://Scenes/Queen.tscn" id="4_64rlw"]
+
+[node name="Simulation" type="Node2D"]
+script = ExtResource("1_m2jov")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Food" parent="." instance=ExtResource("3_s5vku")]
+position = Vector2(-192, 131)
+
+[node name="Queen" parent="." instance=ExtResource("4_64rlw")]
+position = Vector2(363, -158)
+
+[node name="WorldBoundary" type="Node2D" parent="."]

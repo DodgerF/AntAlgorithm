@@ -6,11 +6,11 @@ public partial class Simulation : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
 
-	private PackedScene _antScene = GD.Load<PackedScene>("res://Scences/Ant.tscn");
+	private PackedScene _antScene = GD.Load<PackedScene>("res://Scenes/Ant.tscn");
 
 	public override void _Ready()
 	{
-		for (int i = 0; i < 500; i++)
+		for (int i = 0; i < 1000; i++)
 		{
 			var instance = (Ant)_antScene.Instantiate();
 			instance.Position = new Vector2(i % 500, i % 500);
