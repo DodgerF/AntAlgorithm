@@ -14,19 +14,19 @@ namespace AntAlgorithm
     {
         // Fields
 
-        private int _distQueen; 
+        protected int _distQueen; 
         public int DistQueen {get { return _distQueen;} }
-        private int _distFood;
+        protected int _distFood;
         public int DistFood {get { return _distFood;} }
         [Export] private float _velocity;
         public float Velocity { get { return _velocity; } private set { _velocity = value; } }
 
         [Export] private float _radius;
         public float Radius {get { return _radius;} }
-        private TargetType _target;
+        protected TargetType _target;
 
-        private AntMover _mover;
-        private AntShouter _shouter;
+        protected AntMover _mover;
+        protected AntShouter _shouter;
 
         // Godot events
         public override void _Ready()
@@ -61,11 +61,12 @@ namespace AntAlgorithm
         /// </summary>
         /// <param name="distQueen"></param>
         /// <param name="distFood"></param>
-        public void HearDistances(Vector2 dir, int distQueen, int distFood)
+        public virtual void HearDistances(Vector2 dir, int distQueen, int distFood)
         {  
             if (distFood < _distFood)
             {
                 _distFood = distFood;
+                _shouter.ShoutEveryoneInArea();
                 if (_target == TargetType.Food)
                 {
                     LookAt(dir);
@@ -75,6 +76,8 @@ namespace AntAlgorithm
             if (distQueen < _distQueen)
             {
                 _distQueen = distQueen;
+                _shouter.ShoutEveryoneInArea();
+
                 if (_target == TargetType.Queen)
                 {
                     LookAt(dir);
@@ -84,7 +87,7 @@ namespace AntAlgorithm
 
         public void OnCollisionEnter(Area2D area)
 		{
-			if (area.GetType() == typeof(Queen))
+			if (area is Queen)
 			{
 				_distQueen = 0;
                 Rotate((float)Math.PI);
@@ -97,7 +100,7 @@ namespace AntAlgorithm
                 }
 			}
 
-            if (area.GetType() == typeof(Food))
+            if (area is Food)
 			{
 
 				_distFood = 0;
@@ -118,7 +121,7 @@ namespace AntAlgorithm
         /// <summary>
         /// Делаем шаг и увеличиваем счетчики на один.
         /// </summary>
-        private void Move()
+        protected void Move()
         {
             _mover.Move(this);
             _mover.Rotate(this);

@@ -14,7 +14,7 @@ namespace AntAlgorithm
 
 		public void OnCollisionEnter(Area2D area)
 		{
-			if (area.GetType() == typeof(Ant))
+			if (area is Ant)
 			{
 				var ant = (Ant)area;
 				_ants.Add(ant);
@@ -24,7 +24,7 @@ namespace AntAlgorithm
 
 		public void OnCollisionExit(Area2D area)
 		{
-			if (area.GetType() == typeof(Ant))
+			if (area is Ant)
 			{
 				_ants.Remove((Ant)area);
 			}

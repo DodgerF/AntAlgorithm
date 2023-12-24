@@ -2,7 +2,8 @@ using Godot;
 using System;
 
 
-namespace AntAlgorithm {
+namespace AntAlgorithm 
+{
 	public static partial class Finder
 	{
 		/// <summary>

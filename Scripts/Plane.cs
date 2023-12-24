@@ -21,7 +21,7 @@ public partial class Plane : Area2D
 	}
 
 	public void OnAreaExit(Area2D area) {
-		if (area.GetType() == typeof(Ant)) {
+		if (area is Ant) {
 			Ant ant = (Ant)area;
 
 			ant.Rotation = DegToRad(360f) - ant.Rotation;
