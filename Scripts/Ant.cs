@@ -15,29 +15,36 @@ namespace AntAlgorithm
         // Fields
 
         private int _distQueen; 
+        public int DistQueen {get { return _distQueen;} }
         private int _distFood;
+        public int DistFood {get { return _distFood;} }
         [Export] private float _velocity;
         public float Velocity { get { return _velocity; } private set { _velocity = value; } }
 
         [Export] private float _radius;
-
+        public float Radius {get { return _radius;} }
         private TargetType _target;
 
         private AntMover _mover;
-        private VoiceArea _voiceArea;
+        private AntShouter _shouter;
 
         // Godot events
         public override void _Ready()
         {
-            _mover = (AntMover)FindInChildren(typeof(AntMover));
+            _mover = (AntMover)Finder.FindInChildren(this, typeof(AntMover));
 
-            _voiceArea = (VoiceArea)FindInChildren(typeof(VoiceArea));
-            _voiceArea.SetRadius(_radius);
+            _shouter = (AntShouter)Finder.FindInChildren(this, typeof(AntShouter));
 
-            _distFood = 0;
-            _distQueen = 0;
+            VoiceArea voiceArea = (VoiceArea)Finder.FindInChildren(this, typeof(VoiceArea));
+            voiceArea.SetRadius(_radius);
+            voiceArea.SetShouter(_shouter);
 
-            _velocity += NextFloat(0f, 1f);
+            _shouter.SetVoiceArea(voiceArea);
+
+            _distFood = 1000;
+            _distQueen = 1000;
+
+            _velocity += SmallMath.NextFloat(0f, 1f);
 
             _target = TargetType.Queen;
         }
@@ -46,7 +53,6 @@ namespace AntAlgorithm
         public override void _PhysicsProcess(double delta)
         {
             Move();
-            //Shout();
         }
 
         // Public methods
@@ -75,10 +81,6 @@ namespace AntAlgorithm
                 }
             }
         }
-        public void Shout(Ant ant)
-        {
-            ant.HearDistances(Position, _distQueen + (int)_radius, _distFood + (int)_radius);
-        }
 
         public void OnCollisionEnter(Area2D area)
 		{
@@ -86,7 +88,7 @@ namespace AntAlgorithm
 			{
 				_distQueen = 0;
                 Rotate((float)Math.PI);
-                ShoutEveryoneInArea();
+                _shouter.ShoutEveryoneInArea();
 
                 if (_target == TargetType.Queen)
                 {
@@ -97,9 +99,10 @@ namespace AntAlgorithm
 
             if (area.GetType() == typeof(Food))
 			{
+
 				_distFood = 0;
                 Rotate((float)Math.PI);
-                ShoutEveryoneInArea();
+                _shouter.ShoutEveryoneInArea();
 
                 if (_target == TargetType.Food)
                 {
@@ -111,15 +114,6 @@ namespace AntAlgorithm
 
         // Private methods
         
-        private void ShoutEveryoneInArea()
-        {
-            foreach(Ant ant in _voiceArea.Ants)
-            {
-                if (ant == this) continue;
-
-                Shout(ant);
-            }
-        }
 
         /// <summary>
         /// Делаем шаг и увеличиваем счетчики на один.
@@ -127,41 +121,11 @@ namespace AntAlgorithm
         private void Move()
         {
             _mover.Move(this);
+            _mover.Rotate(this);
             _distFood++;
             _distQueen++;
-            Rotate(NextFloat(DegToRad(-5), DegToRad(5)));
         }
 
-        public float DegToRad(float angle) {
-            return ((float)Math.PI / 180) * angle;
-        }
-
-
-        static float NextFloat(float min, float max){
-            System.Random random = new System.Random();
-            double val = (random.NextDouble() * (max - min) + min);
-            return (float)val;
-        }
-
-        /// <summary>
-        /// Находит нужный скрипт в дочерних Node.
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private Variant FindInChildren(Type type)
-        {
-            var childrens = GetChildren();
-
-            foreach(Node node in childrens)
-            {
-                if (node.GetType() == type)
-                {
-                    return node;
-                }
-            }
-            GD.PrintErr("Такого скрипта нет в детях!");
-            return new Variant();
-        }
 
     }
 }

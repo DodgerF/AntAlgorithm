@@ -10,19 +10,15 @@ namespace AntAlgorithm
 		private HashSet<Ant> _ants = new HashSet<Ant>(); 
 		public IReadOnlyCollection<Ant> Ants =>_ants;
 
-		private Ant _ant;
-		 
-		public override void _Ready() 
-		{
-			_ant = GetParent<Ant>();
-		}
+		private AntShouter _shouter;
+
 		public void OnCollisionEnter(Area2D area)
 		{
 			if (area.GetType() == typeof(Ant))
 			{
 				var ant = (Ant)area;
 				_ants.Add(ant);
-				_ant.Shout(ant);
+				_shouter.Shout(ant);
 			}
 		}
 
@@ -32,6 +28,10 @@ namespace AntAlgorithm
 			{
 				_ants.Remove((Ant)area);
 			}
+		}
+		public void SetShouter(AntShouter shouter)
+		{
+			_shouter = shouter;
 		}
 
 		public void SetRadius(float radius) 

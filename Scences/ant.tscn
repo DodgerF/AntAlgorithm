@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://u6vcus867yqg"]
+[gd_scene load_steps=8 format=3 uid="uid://u6vcus867yqg"]
 
 [ext_resource type="Script" path="res://Scripts/Ant.cs" id="1_sw1d3"]
 [ext_resource type="Texture2D" uid="uid://c7sreyrfkbxaf" path="res://Sprites/Блоха.png" id="2_qiorv"]
 [ext_resource type="Script" path="res://Scripts/AntMover.cs" id="3_5n5is"]
 [ext_resource type="Script" path="res://Scripts/VoiceArea.cs" id="4_ekx1c"]
+[ext_resource type="Script" path="res://Scripts/AntShouter.cs" id="4_xhbrc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xatja"]
 
@@ -33,7 +34,8 @@ shape = SubResource("CapsuleShape2D_xatja")
 [node name="Mover" type="Node2D" parent="."]
 script = ExtResource("3_5n5is")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Shouter" type="Node2D" parent="."]
+script = ExtResource("4_xhbrc")
 
 [node name="VoiceArea" type="Area2D" parent="."]
 collision_layer = 4

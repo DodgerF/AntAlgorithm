@@ -8,5 +8,9 @@ namespace AntAlgorithm
 		{
 			ant.Position += ant.Transform.X * ant.Velocity;
 		}
+		public void Rotate(Ant ant)
+		{
+			ant.Rotate(SmallMath.NextFloat(SmallMath.DegToRad(-5), SmallMath.DegToRad(5)));
+		}
 	}
 }
