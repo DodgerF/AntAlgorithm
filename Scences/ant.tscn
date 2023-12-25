@@ -16,7 +16,7 @@ collision_layer = 2
 input_pickable = false
 script = ExtResource("1_sw1d3")
 _velocity = 1.0
-_radius = 5.0
+_radius = 2.0
 
 [node name="View" type="Sprite2D" parent="."]
 position = Vector2(1.7053e-13, 0)

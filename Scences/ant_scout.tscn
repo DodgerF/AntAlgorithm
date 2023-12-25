@@ -7,7 +7,7 @@
 [node name="AntScout" instance=ExtResource("1_rogxv")]
 script = ExtResource("2_plxfr")
 _velocity = 2.0
-_radius = 10.0
+_radius = 20.0
 
 [node name="View" parent="." index="0"]
 texture = ExtResource("2_n3k8n")
